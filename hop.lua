@@ -1,6 +1,7 @@
 local TeleportService = game:GetService("TeleportService")
 local Players         = game:GetService("Players")
 local HttpService     = game:GetService("HttpService")
+local VIM             = game:GetService("VirtualInputManager")
 
 local LocalPlayer = Players.LocalPlayer
 local placeId     = game.PlaceId
@@ -67,6 +68,14 @@ local function getPlayerGui()
     return LocalPlayer:FindFirstChild("PlayerGui")
 end
 
+-- CLICK HELPER
+local function clickInstance(button)
+    local pos = button.AbsolutePosition + button.AbsoluteSize / 2
+    VIM:SendMouseButtonEvent(pos.X, pos.Y, 0, true, game, 0)
+    task.wait(0.1)
+    VIM:SendMouseButtonEvent(pos.X, pos.Y, 0, false, game, 0)
+end
+
 -- STEP 1: KLIK SLOT 1
 local function clickLoadButton()
     local gui = getPlayerGui()
@@ -96,12 +105,11 @@ local function clickLoadButton()
     local loadButton = header:FindFirstChild("LoadButton")
     if not loadButton then return false end
 
-    -- MainButton langsung di LoadButton, sejajar dengan Container
     local mainButton = loadButton:FindFirstChild("MainButton")
     if not mainButton then return false end
 
     print("[Auto] Klik LoadButton > MainButton")
-    mainButton.MouseButton1Click:Fire()
+    clickInstance(mainButton)
     return true
 end
 
@@ -122,12 +130,11 @@ local function clickClaimButton()
     local claimButton = action:FindFirstChild("ClaimButton")
     if not claimButton then return false end
 
-    -- MainButton langsung di ClaimButton, sejajar dengan Container
     local mainButton = claimButton:FindFirstChild("MainButton")
     if not mainButton then return false end
 
     print("[Auto] Klik ClaimButton > MainButton")
-    mainButton.MouseButton1Click:Fire()
+    clickInstance(mainButton)
     return true
 end
 

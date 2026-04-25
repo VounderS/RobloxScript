@@ -11,7 +11,7 @@ local TARGET_COLOR    = Color3.fromRGB(253, 255, 137)
 local COLOR_TOLERANCE = 5
 local WAIT_AFTER_LOAD = 5
 
-local SCRIPT_URL = "https://raw.githubusercontent.com/VounderS/RobloxScript/refs/heads/main/hop.lua" 
+local SCRIPT_URL = "https://raw.githubusercontent.com/VounderS/RobloxScript/refs/heads/main/hop.lua" -- isi URL script kamu
 
 local queueteleport = (typeof(queue_on_teleport) == "function" and queue_on_teleport)
     or (syn and typeof(syn.queue_on_teleport) == "function" and syn.queue_on_teleport)
@@ -96,14 +96,12 @@ local function clickLoadButton()
     local loadButton = header:FindFirstChild("LoadButton")
     if not loadButton then return false end
 
-    local btnContainer = loadButton:FindFirstChild("Container")
-    if not btnContainer then return false end
+    -- MainButton langsung di LoadButton, sejajar dengan Container
+    local mainButton = loadButton:FindFirstChild("MainButton")
+    if not mainButton then return false end
 
-    local button = btnContainer:FindFirstChild("Button")
-    if not button then return false end
-
-    print("[Auto] Klik Slot 1 LoadButton")
-    button.MouseButton1Click:Fire()
+    print("[Auto] Klik LoadButton > MainButton")
+    mainButton.MouseButton1Click:Fire()
     return true
 end
 
@@ -124,14 +122,12 @@ local function clickClaimButton()
     local claimButton = action:FindFirstChild("ClaimButton")
     if not claimButton then return false end
 
-    local container = claimButton:FindFirstChild("Container")
-    if not container then return false end
+    -- MainButton langsung di ClaimButton, sejajar dengan Container
+    local mainButton = claimButton:FindFirstChild("MainButton")
+    if not mainButton then return false end
 
-    local button = container:FindFirstChild("Button")
-    if not button then return false end
-
-    print("[Auto] Klik ClaimButton")
-    button.MouseButton1Click:Fire()
+    print("[Auto] Klik ClaimButton > MainButton")
+    mainButton.MouseButton1Click:Fire()
     return true
 end
 
@@ -232,7 +228,10 @@ task.spawn(function()
     task.wait(1)
 
     for i = 1, 30 do
-        if clickLoadButton() then break end
+        if clickLoadButton() then
+            print("[Auto Hop] Slot 1 berhasil dipilih")
+            break
+        end
         task.wait(0.5)
     end
 
@@ -246,11 +245,12 @@ task.spawn(function()
     task.wait(1)
 
     for i = 1, 30 do
-        if clickClaimButton() then break end
+        if clickClaimButton() then
+            print("[Auto Hop] Property berhasil di-claim")
+            break
+        end
         task.wait(0.5)
     end
-
-    print("[Auto Hop] Slot dan property dipilih!")
 
     -- STEP 3: tunggu world dan lightparts
     local lightParts = waitForWorld()

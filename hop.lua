@@ -218,7 +218,7 @@ local function serverHop()
         print("[Auto Hop] Server hop ke:", found)
         TeleportService:TeleportToPlaceInstance(placeId, found, LocalPlayer)
     else
-        print("[Auto Hop] Tidak ada server cocok, join server baru")
+        print("[Auto Hop] Tidak ada server caocok, join server baru")
         TeleportService:Teleport(placeId, LocalPlayer)
     end
 end
